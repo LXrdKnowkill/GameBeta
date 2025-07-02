@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mushoku Tensei RPG Prototype</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #1a1a2e;
+            color: white;
+            overflow: hidden;
+        }
+
+        #renderCanvas {
+            width: 100vw;
+            height: 100vh;
+            display: block;
+            cursor: crosshair;
+        }
+
+        /* UI de Casting */
+        #gameUI {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1000;
+        }
+
+        #castingBar {
+            position: absolute;
+            bottom: 20%;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 300px;
+            height: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            border: 2px solid #4a90e2;
+            border-radius: 10px;
+            overflow: hidden;
+            display: none;
+        }
+
+        #castingProgress {
+            height: 100%;
+            background: linear-gradient(90deg, #4a90e2, #7bb3f0);
+            width: 0%;
+            transition: width 0.1s ease;
+            border-radius: 6px;
+        }
+
+        #castingText {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 12px;
+            font-weight: bold;
+            text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+
+        /* Informações de controle */
+        #controls {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        #status {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: rgba(0, 0, 0, 0.7);
+            padding: 15px;
+            border-radius: 8px;
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        .highlight {
+            color: #4a90e2;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <!-- Canvas do Babylon.js -->
+    <canvas id="renderCanvas"></canvas>
+
+    <!-- Interface do Usuário -->
+    <div id="gameUI">
+        <!-- Barra de Casting -->
+        <div id="castingBar">
+            <div id="castingProgress"></div>
+            <div id="castingText">Conjurando...</div>
+        </div>
+
+        <!-- Controles -->
+        <div id="controls">
+            <div style="margin-bottom: 8px;"><strong>🎮 Controles:</strong></div>
+            <div><span class="highlight">WASD</span> - Movimentação</div>
+            <div><span class="highlight">Shift</span> - Correr</div>
+            <div><span class="highlight">Espaço</span> - Pular</div>
+            <div><span class="highlight">Mouse</span> - Câmera</div>
+            <div><span class="highlight">Scroll</span> - Zoom</div>
+            <div><span class="highlight">Clique</span> - Water Ball rápida</div>
+            <div><span class="highlight">Segurar</span> - Water Ball poderosa</div>
+            <div><span class="highlight">ESC</span> - Menu pause</div>
+        </div>
+
+        <!-- Status do Jogador -->
+        <div id="status">
+            <div style="margin-bottom: 8px;"><strong>⚡ Status:</strong></div>
+            <div>Mana: <span id="manaDisplay" class="highlight">100/100</span></div>
+            <div>Magias Lançadas: <span id="spellCount" class="highlight">0</span></div>
+        </div>
+    </div>
+
+    <!-- Script principal -->
+    <script type="module" src="/src/main.ts"></script>
+</body>
+</html>
